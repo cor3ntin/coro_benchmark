@@ -25,7 +25,7 @@ using std::experimental::suspend_never;
 #include <new>
 #include <type_traits>
 #include <utility>
-#include <ranges>
+//#include <ranges>
 
 
 template <typename T>
@@ -339,7 +339,7 @@ class generator {
         }
 
         // Adapt any std::elements_of() range that
-        template <std::ranges::range R>
+        template <typename R>
         // requires std::convertible_to<std::ranges::range_reference_t<R>, Ref>
         yield_sequence_awaiter yield_value(elements_of<R> r) {
            R &&range = std::move(r);
