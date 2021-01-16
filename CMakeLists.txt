@@ -1,8 +1,17 @@
+project(coro_bench)
+cmake_minimum_required(VERSION 3.15)
 
-link_libraries(-static-libgcc -static-libstdc++)
 
-#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    link_libraries(-static-libgcc -static-libstdc++)
+endif()
+
+
 
 add_subdirectory(benchmark)
 
