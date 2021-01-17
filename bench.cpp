@@ -1,13 +1,19 @@
 #include <benchmark/benchmark.h>
 #include <generator.hpp>
 
+#ifdef _MSC_VER
+#define NOINLINE __declspec(noinline)
+#else
+#define NOINLINE __attribute__((noinline))
+#endif
+
 template <typename Generator>
 static Generator dummy() {
     co_yield 42;
 }
 
 template <typename Generator>
-__attribute__((noinline))
+NOINLINE
 static Generator dummy_no_inline() {
     co_yield 42;
 }
@@ -23,7 +29,7 @@ static Generator fib(int max) {
 }
 
 template <typename Generator>
-__attribute__((noinline))
+NOINLINE
 static Generator fib_no_inline(int max) {
     auto a = 0, b = 1;
     for (auto n = 0; n < max; n++) {
